@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dịch Thuật Đa Ngôn Ngữ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .translate-animation {
+            transition: all 0.3s ease;
+        }
+        .translate-animation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">🌍 Dịch Thuật Thông Minh</h1>
+            <p class="text-gray-600 text-lg">Dịch nhanh chóng và chính xác giữa các ngôn ngữ</p>
+        </div>
+
+        <!-- Main Translation Interface -->
+        <div class="max-w-6xl mx-auto">
+            <div class="glass-effect rounded-2xl p-6 translate-animation">
+                <!-- Language Selection Bar -->
+                <div class="flex items-center justify-between mb-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-100">
+                    <div class="flex items-center space-x-4">
+                        <select id="sourceLanguage" class="bg-white text-gray-700 rounded-lg px-4 py-2 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm">
+                            <option value="vi" class="text-gray-800">🇻🇳 Tiếng Việt</option>
+                            <option value="en" class="text-gray-800">🇺🇸 English</option>
+                            <option value="zh" class="text-gray-800">🇨🇳 中文</option>
+                            <option value="ja" class="text-gray-800">🇯🇵 日本語</option>
+                            <option value="ko" class="text-gray-800">🇰🇷 한국어</option>
+                            <option value="fr" class="text-gray-800">🇫🇷 Français</option>
+                            <option value="de" class="text-gray-800">🇩🇪 Deutsch</option>
+                            <option value="es" class="text-gray-800">🇪🇸 Español</option>
+                        </select>
+                        <span class="text-gray-600 font-medium">từ</span>
+                    </div>
+
+                    <button id="swapLanguages" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white p-3 rounded-full transition-all duration-300 hover:rotate-180 shadow-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                        </svg>
+                    </button>
+
+                    <div class="flex items-center space-x-4">
+                        <span class="text-gray-600 font-medium">sang</span>
+                        <select id="targetLanguage" class="bg-white text-gray-700 rounded-lg px-4 py-2 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm">
+                            <option value="en" class="text-gray-800">🇺🇸 English</option>
+                            <option value="vi" class="text-gray-800">🇻🇳 Tiếng Việt</option>
+                            <option value="zh" class="text-gray-800">🇨🇳 中文</option>
+                            <option value="ja" class="text-gray-800">🇯🇵 日本語</option>
+                            <option value="ko" class="text-gray-800">🇰🇷 한국어</option>
+                            <option value="fr" class="text-gray-800">🇫🇷 Français</option>
+                            <option value="de" class="text-gray-800">🇩🇪 Deutsch</option>
+                            <option value="es" class="text-gray-800">🇪🇸 Español</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Translation Boxes -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Source Text -->
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-gray-800 font-semibold text-lg">Văn bản gốc</h3>
+                            <div class="flex space-x-2">
+                                <button id="clearSource" class="text-gray-500 hover:text-gray-700 transition-colors p-2 rounded-lg hover:bg-gray-100">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                                <button id="pasteText" class="text-gray-500 hover:text-gray-700 transition-colors p-2 rounded-lg hover:bg-gray-100">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <textarea 
+                            id="sourceText" 
+                            placeholder="Nhập văn bản cần dịch..."
+                            class="w-full h-64 bg-gray-50 text-gray-800 placeholder-gray-400 rounded-xl p-4 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none shadow-sm"
+                        ></textarea>
+                        <div class="flex items-center justify-between text-gray-500 text-sm">
+                            <span id="charCount">0 ký tự</span>
+                            <button id="voiceInput" class="flex items-center space-x-2 hover:text-gray-700 transition-colors px-3 py-2 rounded-lg hover:bg-gray-100">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                                </svg>
+                                <span>Nói</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Translated Text -->
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-gray-800 font-semibold text-lg">Bản dịch</h3>
+                            <div class="flex space-x-2">
+                                <button id="copyTranslation" class="text-gray-500 hover:text-gray-700 transition-colors p-2 rounded-lg hover:bg-gray-100">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                    </svg>
+                                </button>
+                                <button id="speakTranslation" class="text-gray-500 hover:text-gray-700 transition-colors p-2 rounded-lg hover:bg-gray-100">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M9 12a3 3 0 106 0v-6a3 3 0 10-6 0v6z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div 
+                            id="translatedText" 
+                            class="w-full h-64 bg-blue-50 text-gray-800 rounded-xl p-4 border border-blue-200 overflow-y-auto shadow-sm"
+                        >
+                            <div class="text-gray-400 italic">Bản dịch sẽ xuất hiện ở đây...</div>
+                        </div>
+                        <div class="flex items-center justify-between text-gray-500 text-sm">
+                            <span id="translationStatus">Sẵn sàng dịch</span>
+                            <div class="flex items-center space-x-2">
+                                <span>⭐</span>
+                                <span>Chất lượng dịch: Cao</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-center mt-8 space-x-4">
+                    <button id="translateBtn" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-8 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        🔄 Dịch Ngay
+                    </button>
+                    <button id="detectLanguage" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-xl transition-all duration-300 border border-gray-300 shadow-sm">
+                        🔍 Tự động nhận diện
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Translation Phrases -->
+            <div class="mt-8 glass-effect rounded-2xl p-6">
+                <h3 class="text-gray-800 font-semibold text-lg mb-4">📝 Cụm từ thông dụng</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <button class="quick-phrase bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 text-gray-700 p-3 rounded-lg transition-all duration-300 text-sm border border-blue-200 shadow-sm" data-phrase="Xin chào">
+                        👋 Xin chào
+                    </button>
+                    <button class="quick-phrase bg-gradient-to-r from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 text-gray-700 p-3 rounded-lg transition-all duration-300 text-sm border border-green-200 shadow-sm" data-phrase="Cảm ơn bạn">
+                        🙏 Cảm ơn bạn
+                    </button>
+                    <button class="quick-phrase bg-gradient-to-r from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 text-gray-700 p-3 rounded-lg transition-all duration-300 text-sm border border-purple-200 shadow-sm" data-phrase="Bạn có khỏe không?">
+                        😊 Bạn có khỏe không?
+                    </button>
+                    <button class="quick-phrase bg-gradient-to-r from-orange-50 to-orange-100 hover:from-orange-100 hover:to-orange-200 text-gray-700 p-3 rounded-lg transition-all duration-300 text-sm border border-orange-200 shadow-sm" data-phrase="Tạm biệt">
+                        👋 Tạm biệt
+                    </button>
+                </div>
+            </div>
+
+            <!-- Translation History -->
+            <div class="mt-8 glass-effect rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-gray-800 font-semibold text-lg">📚 Lịch sử dịch</h3>
+                    <button id="clearHistory" class="text-gray-500 hover:text-gray-700 transition-colors text-sm px-3 py-2 rounded-lg hover:bg-gray-100">
+                        Xóa lịch sử
+                    </button>
+                </div>
+                <div id="translationHistory" class="space-y-3 max-h-48 overflow-y-auto">
+                    <div class="text-gray-400 italic text-center py-4">
+                        Chưa có lịch sử dịch nào
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Translation data for demo purposes
+        const translations = {
+            'vi-en': {
+                'Xin chào': 'Hello',
+                'Cảm ơn bạn': 'Thank you',
+                'Bạn có khỏe không?': 'How are you?',
+                'Tạm biệt': 'Goodbye',
+                'Tôi yêu bạn': 'I love you',
+                'Chúc ngủ ngon': 'Good night',
+                'Chào buổi sáng': 'Good morning'
+            },
+            'en-vi': {
+                'Hello': 'Xin chào',
+                'Thank you': 'Cảm ơn bạn',
+                'How are you?': 'Bạn có khỏe không?',
+                'Goodbye': 'Tạm biệt',
+                'I love you': 'Tôi yêu bạn',
+                'Good night': 'Chúc ngủ ngon',
+                'Good morning': 'Chào buổi sáng'
+            }
+        };
+
+        // DOM elements
+        const sourceText = document.getElementById('sourceText');
+        const translatedText = document.getElementById('translatedText');
+        const sourceLanguage = document.getElementById('sourceLanguage');
+        const targetLanguage = document.getElementById('targetLanguage');
+        const translateBtn = document.getElementById('translateBtn');
+        const swapLanguages = document.getElementById('swapLanguages');
+        const charCount = document.getElementById('charCount');
+        const translationStatus = document.getElementById('translationStatus');
+        const translationHistory = document.getElementById('translationHistory');
+
+        // Character counter
+        sourceText.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = `${count} ký tự`;
+            
+            if (count > 0) {
+                translateBtn.classList.add('animate-pulse');
+            } else {
+                translateBtn.classList.remove('animate-pulse');
+            }
+        });
+
+        // Translation function
+        function performTranslation() {
+            const source = sourceText.value.trim();
+            if (!source) {
+                translationStatus.textContent = 'Vui lòng nhập văn bản cần dịch';
+                return;
+            }
+
+            translationStatus.textContent = 'Đang dịch...';
+            translateBtn.disabled = true;
+            translateBtn.textContent = '⏳ Đang dịch...';
+
+            // Simulate translation delay
+            setTimeout(() => {
+                const langPair = `${sourceLanguage.value}-${targetLanguage.value}`;
+                let translation = translations[langPair]?.[source] || 
+                                `[Bản dịch mô phỏng] ${source} (${sourceLanguage.value} → ${targetLanguage.value})`;
+
+                translatedText.innerHTML = `<div class="text-gray-800">${translation}</div>`;
+                translationStatus.textContent = 'Dịch hoàn thành';
+                
+                // Add to history
+                addToHistory(source, translation, sourceLanguage.value, targetLanguage.value);
+                
+                translateBtn.disabled = false;
+                translateBtn.textContent = '🔄 Dịch Ngay';
+            }, 1500);
+        }
+
+        // Add to translation history
+        function addToHistory(source, translation, sourceLang, targetLang) {
+            const historyItem = document.createElement('div');
+            historyItem.className = 'bg-gray-50 rounded-lg p-3 border border-gray-200 shadow-sm';
+            historyItem.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-gray-500 text-xs">${sourceLang.toUpperCase()} → ${targetLang.toUpperCase()}</span>
+                    <span class="text-gray-400 text-xs">${new Date().toLocaleTimeString('vi-VN')}</span>
+                </div>
+                <div class="text-gray-600 text-sm mb-1">${source}</div>
+                <div class="text-gray-800 text-sm font-medium">${translation}</div>
+            `;
+
+            if (translationHistory.children.length === 1 && translationHistory.children[0].textContent.includes('Chưa có lịch sử')) {
+                translationHistory.innerHTML = '';
+            }
+
+            translationHistory.insertBefore(historyItem, translationHistory.firstChild);
+            
+            // Keep only last 5 translations
+            while (translationHistory.children.length > 5) {
+                translationHistory.removeChild(translationHistory.lastChild);
+            }
+        }
+
+        // Event listeners
+        translateBtn.addEventListener('click', performTranslation);
+
+        sourceText.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                performTranslation();
+            }
+        });
+
+        // Swap languages
+        swapLanguages.addEventListener('click', function() {
+            const tempLang = sourceLanguage.value;
+            sourceLanguage.value = targetLanguage.value;
+            targetLanguage.value = tempLang;
+            
+            const tempText = sourceText.value;
+            sourceText.value = translatedText.textContent.replace('[Bản dịch mô phỏng] ', '').split(' (')[0];
+            translatedText.innerHTML = `<div class="text-gray-800">${tempText}</div>`;
+        });
+
+        // Quick phrases
+        document.querySelectorAll('.quick-phrase').forEach(button => {
+            button.addEventListener('click', function() {
+                sourceText.value = this.dataset.phrase;
+                sourceText.dispatchEvent(new Event('input'));
+                performTranslation();
+            });
+        });
+
+        // Clear functions
+        document.getElementById('clearSource').addEventListener('click', function() {
+            sourceText.value = '';
+            translatedText.innerHTML = '<div class="text-gray-400 italic">Bản dịch sẽ xuất hiện ở đây...</div>';
+            charCount.textContent = '0 ký tự';
+            translationStatus.textContent = 'Sẵn sàng dịch';
+        });
+
+        document.getElementById('clearHistory').addEventListener('click', function() {
+            translationHistory.innerHTML = '<div class="text-gray-400 italic text-center py-4">Chưa có lịch sử dịch nào</div>';
+        });
+
+        // Copy translation
+        document.getElementById('copyTranslation').addEventListener('click', function() {
+            const text = translatedText.textContent;
+            if (text && !text.includes('Bản dịch sẽ xuất hiện')) {
+                navigator.clipboard.writeText(text).then(() => {
+                    this.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+                    setTimeout(() => {
+                        this.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>';
+                    }, 2000);
+                });
+            }
+        });
+
+        // Paste text
+        document.getElementById('pasteText').addEventListener('click', async function() {
+            try {
+                const text = await navigator.clipboard.readText();
+                sourceText.value = text;
+                sourceText.dispatchEvent(new Event('input'));
+            } catch (err) {
+                console.log('Không thể dán văn bản');
+            }
+        });
+
+        // Auto-detect language with multiple language support
+        document.getElementById('detectLanguage').addEventListener('click', function() {
+            const text = sourceText.value.trim();
+            if (!text) {
+                translationStatus.textContent = 'Vui lòng nhập văn bản để nhận diện';
+                return;
+            }
+
+            translationStatus.textContent = 'Đang nhận diện ngôn ngữ...';
+            
+            // Simulate detection delay for better UX
+            setTimeout(() => {
+                let detectedLang = 'en'; // default
+                let confidence = 'Trung bình';
+                
+                // Vietnamese detection - diacritics and common words
+                if (/[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/.test(text) || 
+                    /\b(và|của|trong|với|để|từ|có|được|này|đó|không|tôi|bạn|chúng|những)\b/i.test(text)) {
+                    detectedLang = 'vi';
+                    confidence = 'Cao';
+                }
+                // Chinese detection - Chinese characters
+                else if (/[\u4e00-\u9fff]/.test(text)) {
+                    detectedLang = 'zh';
+                    confidence = 'Cao';
+                }
+                // Japanese detection - Hiragana, Katakana, Kanji
+                else if (/[\u3040-\u309f\u30a0-\u30ff\u4e00-\u9fff]/.test(text)) {
+                    detectedLang = 'ja';
+                    confidence = 'Cao';
+                }
+                // Korean detection - Hangul
+                else if (/[\uac00-\ud7af]/.test(text)) {
+                    detectedLang = 'ko';
+                    confidence = 'Cao';
+                }
+                // German detection - common words and umlauts
+                else if (/[äöüß]/.test(text) || 
+                         /\b(und|der|die|das|ist|mit|für|auf|von|zu|im|den|eine|einem|sich|nicht|auch|werden|haben|sein)\b/i.test(text)) {
+                    detectedLang = 'de';
+                    confidence = 'Cao';
+                }
+                // French detection - accents and common words
+                else if (/[àâäéèêëïîôöùûüÿç]/.test(text) || 
+                         /\b(et|de|le|la|les|un|une|du|des|pour|avec|sur|dans|par|ce|cette|qui|que|est|sont|avoir|être)\b/i.test(text)) {
+                    detectedLang = 'fr';
+                    confidence = 'Cao';
+                }
+                // English detection - common words (fallback for Latin script)
+                else if (/\b(the|and|or|but|in|on|at|to|for|of|with|by|from|up|about|into|through|during|before|after|above|below|between|among|is|are|was|were|be|been|being|have|has|had|do|does|did|will|would|could|should|may|might|can|must)\b/i.test(text)) {
+                    detectedLang = 'en';
+                    confidence = 'Cao';
+                }
+                
+                // Set detected language
+                sourceLanguage.value = detectedLang;
+                
+                // Set appropriate target language
+                if (detectedLang === 'vi') {
+                    targetLanguage.value = 'en';
+                } else {
+                    targetLanguage.value = 'vi';
+                }
+                
+                // Get language names for display
+                const languageNames = {
+                    'vi': 'Tiếng Việt',
+                    'en': 'English',
+                    'zh': '中文',
+                    'ja': '日本語',
+                    'ko': '한국어',
+                    'de': 'Deutsch',
+                    'fr': 'Français'
+                };
+                
+                translationStatus.textContent = `Đã nhận diện: ${languageNames[detectedLang]} (Độ tin cậy: ${confidence})`;
+                
+                // Add visual feedback
+                sourceLanguage.classList.add('ring-2', 'ring-green-400');
+                setTimeout(() => {
+                    sourceLanguage.classList.remove('ring-2', 'ring-green-400');
+                }, 2000);
+                
+            }, 800);
+        });
+
+        // Voice input (demo - shows notification)
+        document.getElementById('voiceInput').addEventListener('click', function() {
+            translationStatus.textContent = 'Tính năng nhận diện giọng nói đang được phát triển';
+            setTimeout(() => {
+                translationStatus.textContent = 'Sẵn sàng dịch';
+            }, 3000);
+        });
+
+        // Speak translation (demo - shows notification)
+        document.getElementById('speakTranslation').addEventListener('click', function() {
+            const text = translatedText.textContent;
+            if (text && !text.includes('Bản dịch sẽ xuất hiện')) {
+                translationStatus.textContent = 'Đang phát âm...';
+                setTimeout(() => {
+                    translationStatus.textContent = 'Sẵn sàng dịch';
+                }, 2000);
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980d5ce772979d0c',t:'MTc1ODE2MjAxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
